@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import click
+#import click
 import amazonscraper
 
 
@@ -15,7 +15,7 @@ import amazonscraper
     '--url', '-u',
     type=str,
     help='an Amazon result page URL (ex : \
-https://www.amazon.com/s/field-keywords=python%2Bscraping',
+https://www.amazon.it/s/field-keywords=python%2Bscraping',
     default="",
 )
 @click.option(
@@ -40,14 +40,23 @@ https://www.amazon.com/s/field-keywords=python%2Bscraping',
     help='Save the html page to the current folder with the specified name',
     default="",
 )
+
 def main(keywords, url, csvseparator, maxproductnb, outputhtml):
     """ Search for products on Amazon, and extract it as CSV """
     products = amazonscraper.search(
-                                    keywords=keywords,
+                                    keywords="2060",
                                     search_url=url,
-                                    max_product_nb=maxproductnb)
+                                    max_product_nb=20)
 
-    print(products.csv(separator=csvseparator))
+    # ORIGINALE
+    # """ Search for products on Amazon, and extract it as CSV """
+    # products = amazonscraper.search(
+    #                                 keywords=keywords,
+    #                                 search_url=url,
+    #               
+    #                   max_product_nb=maxproductnb)                                    
+
+    print(products.csv("estrazione.csv", separator=csvseparator))
 
     if (outputhtml != ""):
         with open(outputhtml, "w") as f:

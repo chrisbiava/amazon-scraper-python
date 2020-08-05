@@ -9,7 +9,7 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 import time
 
-_BASE_URL = "https://www.amazon.com/"
+_BASE_URL = "https://www.amazon.it/"
 _DEFAULT_BEAUTIFULSOUP_PARSER = "html.parser"
 _DEFAULT_USER_AGENT = 'Mozilla/5.0 (Linux; Android 7.0; \
 SM-A520F Build/NRD90M; wv) AppleWebKit/537.36 \
@@ -24,41 +24,41 @@ _USER_AGENT_LIST = [
     _CHROME_DESKTOP_USER_AGENT,
 ]
 
-_CSS_SELECTORS_MOBILE = {
-    "product": "#resultItems > li",
-    "title": "a > div > div.sx-table-detail > h5 > span",
-    "rating": "a > div > div.sx-table-detail > \
-               div.a-icon-row.a-size-small > i > span",
-    "review_nb": "a > div > div.sx-table-detail > \
-                  div.a-icon-row.a-size-small > span",
-    "url": "a[href]",
-    "img": "img[src]",
-    "next_page_url": "ul.a-pagination > li.a-last > a[href]",
-}
-# Sometimes, the result page is displayed with another layout
-_CSS_SELECTORS_MOBILE_GRID = {
-    "product": "#grid-atf-content > li > div.s-item-container",
-    "title": "a > div > h5.sx-title > span",
-    "rating": "a > div > div.a-icon-row.a-size-mini > i > span",
-    "review_nb": "a > div > div.a-icon-row.a-size-mini > span",
-    "url": "a[href]",
-    "img": "img[src]",
-    "next_page_url": "ul.a-pagination > li.a-last > a[href]",
-}
-_CSS_SELECTORS_DESKTOP = {
-    "product": "ul > li.s-result-item > div.s-item-container",
-    "title": "a.s-access-detail-page > h2",
-    "rating": "i.a-icon-star > span",
-    "review_nb": "div.a-column.a-span5.a-span-last > \
-                div.a-row.a-spacing-mini > \
-                a.a-size-small.a-link-normal.a-text-normal",
-    "url": "div.a-row.a-spacing-small > div.a-row.a-spacing-none > a[href]",
-    "img": "div.a-column.a-span12.a-text-center > a.a-link-normal.a-text-normal > img[src]",
-    "next_page_url": "a#pagnNextLink",
-}
+# _CSS_SELECTORS_MOBILE = {
+#     "product": "#resultItems > li",
+#     "title": "a > div > div.sx-table-detail > h5 > span",
+#     "rating": "a > div > div.sx-table-detail > \
+#                div.a-icon-row.a-size-small > i > span",
+#     "review_nb": "a > div > div.sx-table-detail > \
+#                   div.a-icon-row.a-size-small > span",
+#     "url": "a[href]",
+#     "img": "img[src]",
+#     "next_page_url": "ul.a-pagination > li.a-last > a[href]",
+# }
+# # Sometimes, the result page is displayed with another layout
+# _CSS_SELECTORS_MOBILE_GRID = {
+#     "product": "#grid-atf-content > li > div.s-item-container",
+#     "title": "a > div > h5.sx-title > span",
+#     "rating": "a > div > div.a-icon-row.a-size-mini > i > span",
+#     "review_nb": "a > div > div.a-icon-row.a-size-mini > span",
+#     "url": "a[href]",
+#     "img": "img[src]",
+#     "next_page_url": "ul.a-pagination > li.a-last > a[href]",
+# }
+# _CSS_SELECTORS_DESKTOP = {
+#     "product": "ul > li.s-result-item > div.s-item-container",
+#     "title": "a.s-access-detail-page > h2",
+#     "rating": "i.a-icon-star > span",
+#     "review_nb": "div.a-column.a-span5.a-span-last > \
+#                 div.a-row.a-spacing-mini > \
+#                 a.a-size-small.a-link-normal.a-text-normal",
+#     "url": "div.a-row.a-spacing-small > div.a-row.a-spacing-none > a[href]",
+#     "img": "div.a-column.a-span12.a-text-center > a.a-link-normal.a-text-normal > img[src]",
+#     "next_page_url": "a#pagnNextLink",
+# }
 _CSS_SELECTORS_DESKTOP_2 = {
     "product": "div.s-result-list.sg-row > div.s-result-item",
-    "title": "div div.sg-row  h5 > span",
+    "title": "div div.sg-row  h2 > span",
     "rating": "div div.sg-row .a-spacing-top-mini i span",
     "review_nb": "div div.sg-row .a-spacing-top-mini span.a-size-small",
     "url": "div div a.a-link-normal",
@@ -67,9 +67,9 @@ _CSS_SELECTORS_DESKTOP_2 = {
 }
 
 _CSS_SELECTOR_LIST = [
-                        _CSS_SELECTORS_MOBILE,
-                        _CSS_SELECTORS_MOBILE_GRID,
-                        _CSS_SELECTORS_DESKTOP,
+                        # _CSS_SELECTORS_MOBILE,
+                        # _CSS_SELECTORS_MOBILE_GRID,
+                        # _CSS_SELECTORS_DESKTOP,
                         _CSS_SELECTORS_DESKTOP_2,
                      ]
 
@@ -87,7 +87,7 @@ class Client(object):
         self.session = requests.session()
         self.current_user_agent_index = 0
         self.headers = {
-                    'Host': 'www.amazon.com',
+                    'Host': 'www.amazon.it',
                     'User-Agent': _USER_AGENT_LIST[0],
                     'Accept': 'text/html,application/xhtml+xml,\
                         application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
@@ -130,7 +130,7 @@ class Client(object):
         """ Update the 'Host' field in the header with the proper Amazon domain
         >>> c = Client()
         >>> print(c.headers['Host'])
-        www.amazon.com
+        www.amazon.it
         >>> c._update_headers("https://www.amazon.fr/s/lkdjsdlkjlk")
         >>> print(c.headers['Host'])
         www.amazon.fr
@@ -143,9 +143,13 @@ class Client(object):
         """ Get the Amazon search URL, based on the keywords passed
         >>> c = Client()
         >>> print(c._get_search_url(keywords="python"))
-        https://www.amazon.com/s?k=python
+        https://www.amazon.it/s?k=python
         """
+        # WAREHOUSE
+        # search_url = urljoin(_BASE_URL, ("s?k=%s" % (keywords)) + "&i=warehouse-deals")
+        
         search_url = urljoin(_BASE_URL, ("s?k=%s" % (keywords)))
+        
         return search_url
 
     def _check_page(self, html_content):
@@ -223,9 +227,9 @@ class Client(object):
         """Given the HTML of a `product`, extract the title"""
 
         title_css_selectors = [
-            'h5 span',
+            'h2 span',
             "a.s-access-detail-page > h2",
-            "div div.sg-row  h5 > span"
+            "div div.sg-row  h2 > span"
         ]
 
         for selector in title_css_selectors:
@@ -244,7 +248,7 @@ class Client(object):
     def _get_rating(self, product):
         """Given the HTML of a `product`, extract the average rating"""
 
-        rating = re.search(r'(\d.\d) out of 5', str(product))
+        rating = re.search(r'(\d.\d) su 5 stelle', str(product))
 
         if rating:
             rating = rating.groups()[0]
@@ -265,7 +269,7 @@ class Client(object):
         # various formats of books.
 
         # match all prices of the form $X,XXX.XX:
-        raw_prices = product.find_all(text=re.compile('\$[\d,]+.\d\d'))
+        raw_prices = product.find_all(text=re.compile('[\d,]+,\d\d\€'))
 
         prices = {
             'prices_per_unit': set(),
@@ -276,17 +280,19 @@ class Client(object):
         # attempt to identify the prices
         for raw_price in raw_prices:
 
+# DOTTOREDOTA
             # get the price as a float rather than a string or BeautifulSoup object
-            price = float(re.search('\$([\d,]+.\d\d)', raw_price).groups()[0])
+            price = float((re.search('([\d,]+,\d\d\€)', raw_price).groups()[0]).replace(",", ".").replace("€",""))
 
             # ignore promotional strikethrough prices
             if raw_price.parent.parent.attrs.get('data-a-strike') == 'true':
                 continue
 
             # ignore promotional freebies
-            elif raw_price == '$0.00':
+            elif raw_price == '€0,00':
                 continue
-
+# DOTTOREDOTA
+# NON WORKA ANCORA LA PARTE DEI PREZZI, CONTROLLA LE REGEX
             # extract price per unit price and unit
             elif raw_price.startswith('(') and '/' in raw_price:
                 price_per_unit = re.findall(r'/(.*)\)', raw_price)[0]
@@ -329,7 +335,7 @@ class Client(object):
 
             if len(products) >= 1:
                 break
-
+        print(len(products))
         # For each product of the result page
         for product in products:
 
@@ -353,6 +359,12 @@ class Client(object):
             # Get image before url and asin
             css_selector = css_selector_dict.get("img", "")
             img_product_soup = product.select(css_selector)
+            
+            # In quanto il primo risultato scrapeato non ha immagine e nell __init__.py le chiavi vengono prese dal dizionario alla prima posizione
+            # ossia --> header = list(self.products[0].product.keys())
+            # Quindi creo comunque la chiave nel dizionario
+            product_dict['img'] = ''
+
             if img_product_soup:
                 img_url = img_product_soup[0].get('src')
                 # Check if it is not a base64 formatted image
@@ -444,13 +456,13 @@ def _css_select(soup, css_selector):
 def _get_high_res_img_url(img_url):
     """ Returns a modified url pointing to the high resolution version of
     the image
-    >>> print(_get_high_res_img_url("https://images-na.ssl-images-amazon.com/\
+    >>> print(_get_high_res_img_url("https://images-na.ssl-images-amazon.it/\
 images/I/513gErH1dML._AC_SX236_SY340_FMwebp_QL65_.jpg"))
-    https://images-na.ssl-images-amazon.com/\
+    https://images-na.ssl-images-amazon.it\
 images/I/513gErH1dML.jpg
-    >>> print(_get_high_res_img_url("https://images-na.ssl-images-amazon.com/\
+    >>> print(_get_high_res_img_url("https://images-na.ssl-images-amazon.it/\
 images/I/51F48HFHq6L._AC_SX118_SY170_QL70_.jpg"))
-    https://images-na.ssl-images-amazon.com/\
+    https://images-na.ssl-images-amazon.it/\
 images/I/51F48HFHq6L.jpg
     """
     high_res_url = img_url.split("._")[0] + ".jpg"
