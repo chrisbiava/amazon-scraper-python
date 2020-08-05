@@ -43,18 +43,18 @@ https://www.amazon.it/s/field-keywords=python%2Bscraping',
 
 def main(keywords, url, csvseparator, maxproductnb, outputhtml):
     """ Search for products on Amazon, and extract it as CSV """
-    products = amazonscraper.search(
-                                    keywords="2060",
-                                    search_url=url,
-                                    max_product_nb=100)
+    # products = amazonscraper.search(
+    #                                 keywords="2060",
+    #                                 search_url=url,
+    #                                 max_product_nb=100)
 
     # ORIGINALE
     # """ Search for products on Amazon, and extract it as CSV """
-    # products = amazonscraper.search(
-    #                                 keywords=keywords,
-    #                                 search_url=url,
-    #               
-    #                   max_product_nb=maxproductnb)                                    
+    products = amazonscraper.search(
+                                    keywords=keywords,
+                                    search_url=url,
+                  
+                      max_product_nb=maxproductnb)                                    
 
     print(products.csv("estrazione.csv", separator=csvseparator))
 
