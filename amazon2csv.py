@@ -46,7 +46,7 @@ def main(keywords, url, csvseparator, maxproductnb, outputhtml):
     products = amazonscraper.search(
                                     keywords="2060",
                                     search_url=url,
-                                    max_product_nb=20)
+                                    max_product_nb=100)
 
     # ORIGINALE
     # """ Search for products on Amazon, and extract it as CSV """
